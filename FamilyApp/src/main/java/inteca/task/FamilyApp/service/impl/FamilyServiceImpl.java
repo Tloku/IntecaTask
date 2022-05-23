@@ -65,7 +65,7 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public List<FamilyMemberResponse> getFamilyMembersFromFamilyMemberApp(int familyId) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:9110//family_members/get";
+        String url = "http://familymemberapp:9110/family_members/get";
         ResponseEntity<FamilyMemberResponse[]> response = restTemplate.getForEntity(
                 url+"/"+familyId,
                 FamilyMemberResponse[].class);
@@ -130,7 +130,7 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public void postFamilyMembers(List<FamilyMemberRequest> familyMemberRequests) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:9110//family_members/create"; // FamilyMemberApp call
+        String url = "http://familymemberapp:9110/family_members/create"; // FamilyMemberApp call
         HttpEntity<List<FamilyMemberRequest>> request = new HttpEntity<>(familyMemberRequests);
         restTemplate.postForObject(url, request, FamilyMemberRequest.class);
     }

@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+  intecadb:
+    restart: always
+    build: .
+    container_name: db
+    ports:
+      - 5432:5432
+    networks:
+      - familyNet  
+
+  familyapp:
+    restart: always
+    build: ./FamilyApp
+    ports:
+      - 9100:9100
+    networks:
+      - familyNet
+    command: "mvn spring-boot:run"
+    depends_on:
+      - intecadb
+
+  familymemberapp:
+    restart: always
+    build: ./FamilyMemberApp
+    container_name: familymemberapp
+    ports:
+      - 9110:9110
+    networks:
+      - familyNet
+    command: "mvn spring-boot:run"
+    depends_on:
+      - intecadb
+
+networks:
+  familyNet:
+    driver: bridge
